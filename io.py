@@ -9,6 +9,9 @@ class Output:
         for color in sequence:
             self.blink(color)
 
+    def blinkAll(self):
+        pass
+
 class GPIO(Output):
     pins = {
         'buttons': { # TODO: Add pull-down GPIO pins
@@ -43,6 +46,15 @@ class GPIO(Output):
         else:
             raise ValueError('Unknown Color Provided')
 
+    def blinkAll(self):
+        leds = self.pins.leds
+
+        for color in leds:
+            gpio.output(leds[color], True)
+        time.sleep(1)
+        for color in leds:
+            gpio.output(leds[color], False)
+
 class Screen(Output):
     colors = ['RED', 'GREEN', 'YELLOW', 'WHITE']
 
@@ -51,3 +63,6 @@ class Screen(Output):
             print color
         else:
             raise ValueError('Unknown Color Provided')
+
+    def blinkAll(self):
+        print ', '.join(self.colors)
