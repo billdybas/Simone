@@ -14,7 +14,7 @@ class Game:
         elif game_mode == 1:
             self.io = io.Screen()
         else:
-            print "Illegal Game Mode Provided. Use '0' for debug and '1' for GPIO"
+            print "Illegal Game Mode Provided. Use '0' for GPIO and '1' for debug"
             sys.exit(2) # 2 is the exit code for an invalid command line argument
 
     def _play_round(self):
@@ -82,7 +82,17 @@ class Game:
         self.io.cleanup() # Cleanup any resources, like active GPIO pins
 
 if __name__ == '__main__':
-    game = Game(1) # TODO: Command-line argument
+    if (len(sys.argv) <= 1 or not sys.argv[1].isdigit()):
+        print 'No Game Mode Specified'
+        print
+        print 'Usage: python main.py game_mode'
+        print
+        print 'game_mode:'
+        print '0: Raspberry Pi GPIO'
+        print '1: Debug (Command-line)'
+        sys.exit(2) # 2 is the exit code for an invalid command line argument
+
+    game = Game(int(sys.argv[1]))
 
     try:
         game.start()
