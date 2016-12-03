@@ -40,22 +40,12 @@ class Game:
 
     def _validate_user_input(self):
         for color in self.sequence:
-            start_time = time.time()
-
             # If the player enters the wrong color or they take too
             # long to enter a color, end the game
-            if (color != self.io.wait_for_input()):
+            if (color != self.io.wait_for_input()): # NOTE: In 'debug' mode, one cannot lose the game due to timeout
                 return False
-            elif (self._timer_expired(start_time)):
-                # This has to be an 'elif' instead of 'or'ed with
-                # the first 'if' because 'wait_for_input' is blocking
-                return False
-            # FIXME: The game will block indefinitely waiting for input but instead, should timeout when input hasn't been received
 
         return True
-
-    def _timer_expired(self, start_time, end_time = time.time(), threshold = 1):
-        return end_time - start_time > threshold
 
     def _should_display_hiscore(self):
         # The score is determined from how many colors
@@ -74,12 +64,12 @@ class Game:
         self.sequence = []
 
     def _shutdown(self):
-        # TODO: Sleep until an input occurs and then call 'start'?
-        pass
+        self.io.wait_for_input(-1) # Wait for input indefinitely
+        self.start() # Once there's input, the game will start over
 
     def _should_start_next_round(self):
-        # TODO: wait for input or timeout?
-        return True
+        # If there's input within 5 seconds of a round ending, start another round
+        return self.io.wait_for_input(5) != ''
 
     def start(self):
         self._play_round()
@@ -88,7 +78,7 @@ class Game:
         self._shutdown()
 
     def quit(self):
-        self.io.cleanup()
+        self.io.cleanup() # Cleanup any resources, like active GPIO pins
 
 if __name__ == '__main__':
     game = Game(1) # TODO: Command-line argument
