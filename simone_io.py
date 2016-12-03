@@ -59,7 +59,7 @@ class GPIO(Input, Output):
             gpio.output(leds[color], True)
             time.sleep(1)
             gpio.output(leds[color], False)
-            time.sleep(1)
+            time.sleep(0.25)
         else:
             raise ValueError('Unknown Color Provided')
 
@@ -71,9 +71,9 @@ class GPIO(Input, Output):
         time.sleep(1)
         for color in leds:
             gpio.output(leds[color], False)
-        time.sleep(1)
+        time.sleep(0.25)
 
-    def wait_for_input(self, timeout = 1):
+    def wait_for_input(self, timeout = 3):
         buttons = self.pins['buttons']
         start_time = time.time()
 
@@ -95,7 +95,10 @@ class GPIO(Input, Output):
 
             time.sleep(0.1)
 
-    def timer_expired(self, start_time, threshold = 1, end_time = time.time()):
+    def timer_expired(self, start_time, threshold = 1, end_time = None):
+        if end_time is None:
+            end_time = time.time()
+
         return end_time - start_time > threshold
 
 class Screen(Input, Output):
