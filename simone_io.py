@@ -45,15 +45,15 @@ class GPIO(Input, Output):
         gpio.setmode(gpio.BOARD)
 
         for p in self.pins.buttons:
-            gpio.setup(self.pins.buttons[p], gpio.IN, pull_up_down = gpio.PUD_DOWN)
+            gpio.setup(self.pins['buttons'][p], gpio.IN, pull_up_down = gpio.PUD_DOWN)
         for p in self.pins.leds:
-            gpio.setup(self.pins.leds[p], gpio.OUT)
+            gpio.setup(self.pins['leds'][p], gpio.OUT)
 
     def cleanup(self):
         gpio.cleanup()
 
     def blink(self, color):
-        leds = self.pins.leds
+        leds = self.pins['leds']
 
         if color in self.colors:
             gpio.output(leds[color], True)
@@ -63,7 +63,7 @@ class GPIO(Input, Output):
             raise ValueError('Unknown Color Provided')
 
     def blink_all(self):
-        leds = self.pins.leds
+        leds = self.pins['leds']
 
         for color in leds:
             gpio.output(leds[color], True)
@@ -72,7 +72,7 @@ class GPIO(Input, Output):
             gpio.output(leds[color], False)
 
     def wait_for_input(self):
-        buttons = self.pins.buttons
+        buttons = self.pins['buttons']
 
         while True:
             if (gpio.input(buttons['RED'])):
