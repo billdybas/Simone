@@ -1,18 +1,31 @@
 import RPi.GPIO as gpio
 import time
+import random
+
+class Input:
+    def wait_for_input(self):
+        raise NotImplementedError()
 
 class Output:
-    def blink(self, color):
-        pass
+    colors = ['RED', 'GREEN', 'YELLOW', 'WHITE']
 
-    def blinkSequence(self, sequence):
+    def cleanup(self):
+        raise NotImplementedError()
+
+    def blink(self, color):
+        raise NotImplementedError()
+
+    def blink_all(self):
+        raise NotImplementedError()
+
+    def blink_sequence(self, sequence):
         for color in sequence:
             self.blink(color)
 
-    def blinkAll(self):
-        pass
+    def choose_random_color(self):
+        return random.choice(self.colors)
 
-class GPIO(Output):
+class GPIO(Input, Output):
     pins = {
         'buttons': { # TODO: Add pull-down GPIO pins
             'RED': -1,
@@ -36,17 +49,20 @@ class GPIO(Output):
         for p in self.pins.leds:
             gpio.setup(self.pins.leds[p], gpio.OUT)
 
+    def cleanup(self):
+        gpio.cleanup()
+
     def blink(self, color):
         leds = self.pins.leds
 
-        if color in leds:
+        if color in self.colors:
             gpio.output(leds[color], True)
             time.sleep(1)
             gpio.output(leds[color], False)
         else:
             raise ValueError('Unknown Color Provided')
 
-    def blinkAll(self):
+    def blink_all(self):
         leds = self.pins.leds
 
         for color in leds:
@@ -55,8 +71,13 @@ class GPIO(Output):
         for color in leds:
             gpio.output(leds[color], False)
 
-class Screen(Output):
-    colors = ['RED', 'GREEN', 'YELLOW', 'WHITE']
+    def wait_for_input(self):
+        pass # TODO
+
+class Screen(Input, Output):
+
+    def cleanup(self):
+        pass # Intentionally left blank
 
     def blink(self, color):
         if color in self.colors:
@@ -64,5 +85,16 @@ class Screen(Output):
         else:
             raise ValueError('Unknown Color Provided')
 
-    def blinkAll(self):
+    def blink_all(self):
+        print
         print ', '.join(self.colors)
+
+    def blink_sequence(self, sequence):
+        print
+        for color in sequence:
+            self.blink(color)
+            if len(sequence) > 1:
+                time.sleep(1)
+
+    def wait_for_input(self):
+        return raw_input()
