@@ -44,9 +44,9 @@ class GPIO(Input, Output):
     def __init__(self):
         gpio.setmode(gpio.BOARD)
 
-        for p in self.pins.buttons:
+        for p in self.pins['buttons']:
             gpio.setup(self.pins['buttons'][p], gpio.IN, pull_up_down = gpio.PUD_DOWN)
-        for p in self.pins.leds:
+        for p in self.pins['leds']:
             gpio.setup(self.pins['leds'][p], gpio.OUT)
 
     def cleanup(self):
