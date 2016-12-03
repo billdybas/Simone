@@ -36,7 +36,7 @@ class GPIO(Input, Output):
         'leds': {
             'RED': 32,
             'GREEN': 36,
-            'YELLOW': 38,
+            'YELLOW': 37, # TODO: Put back to pin 38; Technical difficulties forced us to move it
             'BLUE': 40
         }
     }
@@ -72,7 +72,23 @@ class GPIO(Input, Output):
             gpio.output(leds[color], False)
 
     def wait_for_input(self):
-        pass # TODO
+        buttons = self.pins.buttons
+
+        while True:
+            if (gpio.input(buttons['RED'])):
+                self.blink('RED')
+                return 'RED'
+            elif (gpio.input(buttons['GREEN'])):
+                self.blink('GREEN')
+                return 'GREEN'
+            elif (gpio.input(buttons['YELLOW'])):
+                self.blink('YELLOW')
+                return 'YELLOW'
+            elif (gpio.input(buttons['BLUE'])):
+                self.blink('BLUE')
+                return 'BLUE'
+
+            time.sleep(0.1)
 
 class Screen(Input, Output):
 
