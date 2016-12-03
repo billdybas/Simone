@@ -96,6 +96,9 @@ class GPIO(Input, Output):
             time.sleep(0.1)
 
     def timer_expired(self, start_time, threshold = 1, end_time = None):
+        if threshold == -1:
+            return False
+
         if end_time is None:
             end_time = time.time()
 

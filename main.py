@@ -24,6 +24,7 @@ class Game:
             self._add_to_sequence() # Add another color to the sequence
             self._display_sequence() # Show the sequence to the player
             should_continue_round = self._validate_user_input() # See if the player matches the sequence
+            time.sleep(0.5)
 
         # Endgame
         if self._should_display_hiscore():
