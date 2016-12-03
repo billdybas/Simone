@@ -7,7 +7,7 @@ class Input:
         raise NotImplementedError()
 
 class Output:
-    colors = ['RED', 'GREEN', 'YELLOW', 'WHITE']
+    colors = ['RED', 'GREEN', 'YELLOW', 'BLUE']
 
     def cleanup(self):
         raise NotImplementedError()
@@ -27,17 +27,17 @@ class Output:
 
 class GPIO(Input, Output):
     pins = {
-        'buttons': { # TODO: Add pull-down GPIO pins
-            'RED': -1,
-            'GREEN': -1,
-            'YELLOW': -1,
-            'WHITE': -1
+        'buttons': {
+            'RED': 13,
+            'GREEN': 19,
+            'YELLOW': 21,
+            'BLUE': 23
         },
-        'leds': { # TODO: Add output pins for the LEDs
-            'RED': -1,
-            'GREEN': -1,
-            'YELLOW': -1,
-            'WHITE': -1
+        'leds': {
+            'RED': 32,
+            'GREEN': 36,
+            'YELLOW': 38,
+            'BLUE': 40
         }
     }
 
