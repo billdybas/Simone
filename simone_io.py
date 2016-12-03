@@ -126,5 +126,5 @@ class Screen(Input, Output):
             if len(sequence) > 1:
                 time.sleep(1)
 
-    def wait_for_input(self, timeout):
+    def wait_for_input(self, timeout = None):
         return raw_input()
