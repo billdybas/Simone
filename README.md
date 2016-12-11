@@ -4,7 +4,7 @@ Simon, built for the Raspberry Pi.
 
 ## About
 
-![Simon Game](https://cloud.githubusercontent.com/assets/13719429/21077761/1b28965a-bf24-11e6-85b2-6f64108d965f.jpg)
+![Simon Game](https://cloud.githubusercontent.com/assets/13719429/21077790/1c89934a-bf25-11e6-806d-6c318639b686.jpg)
 
 [Simon](https://en.wikipedia.org/wiki/Simon_(game)) is an electronic memory game based on a series of blinking colored lights. A player must correctly match the series, and in doing so, the series becomes longer and more complex. The player continues until they incorrectly match the sequence.
 
