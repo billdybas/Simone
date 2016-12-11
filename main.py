@@ -20,6 +20,7 @@ class Game:
     def _play_round(self):
         should_continue_round = True
 
+        # Round Loop
         while should_continue_round:
             self._add_to_sequence() # Add another color to the sequence
             self._display_sequence() # Show the sequence to the player
@@ -62,6 +63,7 @@ class Game:
         self.io.blink_all()
 
     def _reset_round(self):
+        # The game is reset by emptying the sequence
         self.sequence = []
 
     def _shutdown(self):
@@ -92,11 +94,11 @@ if __name__ == '__main__':
         print '1: Debug (Command-line)'
         sys.exit(2) # 2 is the exit code for an invalid command line argument
 
-    game = Game(int(sys.argv[1]))
+    game = Game(int(sys.argv[1])) # Make a game based on the game mode selected
 
     try:
         game.start()
-    except KeyboardInterrupt:
+    except KeyboardInterrupt: # Handle interrupting the game
         pass
     finally:
         game.quit()

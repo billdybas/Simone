@@ -45,8 +45,10 @@ class GPIO(Input, Output):
         gpio.setmode(gpio.BOARD)
 
         for p in self.pins['buttons']:
+            # Setup all the button pins as input and pull-down
             gpio.setup(self.pins['buttons'][p], gpio.IN, pull_up_down = gpio.PUD_DOWN)
         for p in self.pins['leds']:
+            # Setup all the LED pins as output
             gpio.setup(self.pins['leds'][p], gpio.OUT)
 
     def cleanup(self):
@@ -56,9 +58,9 @@ class GPIO(Input, Output):
         leds = self.pins['leds']
 
         if color in self.colors:
-            gpio.output(leds[color], True)
+            gpio.output(leds[color], True) # Turn on the LED
             time.sleep(1)
-            gpio.output(leds[color], False)
+            gpio.output(leds[color], False) # Turn off the LED
             time.sleep(0.25)
         else:
             raise ValueError('Unknown Color Provided')
@@ -77,6 +79,8 @@ class GPIO(Input, Output):
         buttons = self.pins['buttons']
         start_time = time.time()
 
+        # Polls for input from one of the buttons,
+        # or times out if no input is received
         while True:
             if (gpio.input(buttons['RED'])):
                 self.blink('RED')
@@ -96,9 +100,12 @@ class GPIO(Input, Output):
             time.sleep(0.1)
 
     def timer_expired(self, start_time, threshold = 1, end_time = None):
-        if threshold == -1:
+        if threshold == -1: # This allows for an indefinite timeout
             return False
 
+        # We have to set this here instead of as a
+        # default paramter, since Python default paramters
+        # are evaluated at program run-time, not at function-call
         if end_time is None:
             end_time = time.time()
 
@@ -127,4 +134,6 @@ class Screen(Input, Output):
                 time.sleep(1)
 
     def wait_for_input(self, timeout = None):
+        # Note that we can't timeout
+        # since 'raw_input' is blocking
         return raw_input()
