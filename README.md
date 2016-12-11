@@ -4,7 +4,7 @@ Simon, built for the Raspberry Pi.
 
 ## About
 
-_Insert Simon Picture Here_
+![Simon Game](https://cloud.githubusercontent.com/assets/13719429/21077761/1b28965a-bf24-11e6-85b2-6f64108d965f.jpg)
 
 [Simon](https://en.wikipedia.org/wiki/Simon_(game)) is an electronic memory game based on a series of blinking colored lights. A player must correctly match the series, and in doing so, the series becomes longer and more complex. The player continues until they incorrectly match the sequence.
 
@@ -26,7 +26,7 @@ You must have 4 LEDs (we used red, yellow, green, and blue), 4 resistors, 4 push
 
 Suggested GPIO pin configuration has been defined in `simone_io.py`.
 
-_Insert Simone Picture Here_
+![Simone Game Hardware](https://cloud.githubusercontent.com/assets/13719429/21077762/21146210-bf24-11e6-97dc-a19ae275b0a2.JPG)
 
 ## Installation & Usage
 
